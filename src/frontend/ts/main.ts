@@ -1,5 +1,5 @@
-class Main implements EventListenerObject, HandlerPOST{//esto ultimo me obliga a implementar un handler 
-    //handleEvent y ahora al addEventListener del windows.load le paso un objeto en lugar de hacer una funcion anonima 
+class Main implements EventListenerObject, HandlerPOST{
+
     public myframework: MyFramework;
     constructor(){
         this.myframework = new MyFramework();
@@ -12,7 +12,7 @@ class Main implements EventListenerObject, HandlerPOST{//esto ultimo me obliga a
         console.log(ev); */
 
         let objetoClick:HTMLElement = <HTMLInputElement> ev.target;//lo castea, esto obtiene que boton produjo el evento
-        if(objetoClick.textContent == "Click")
+        if(objetoClick.textContent == "Buscar")
         {
             //objetoClick.textContent = "btn pulsado";
             //console.log("se pulso");
@@ -28,23 +28,8 @@ class Main implements EventListenerObject, HandlerPOST{//esto ultimo me obliga a
                         
                         for(let disp of listaDis){
                             let listaDisp = this.myframework.getElementById("listaDis");
-                            listaDisp.innerHTML += `<li class="collection-item avatar">
-                                <img src="./static/images/bulb.jpg" alt="" class="circle">
-                                <span class="nombreDisp">${disp.name}</span>
-                                <p>${disp.description}
-                                </p>
-                                <a href="#!" class="secondary-content">
-                                    <div class="switch">
-                                        <label>
-                                        Off
-                                        <input id="disp_${disp.id}" type="checkbox">
-                                        <span class="lever"></span>
-                                        On
-                                        </label>
-                                    </div>
-                                </a>
-                                </li>`
-                            console.log(disp.name + "-" + disp.description);
+                            listaDisp.innerHTML += this.componentSelection(disp);
+                            //console.log(disp.name + "-" + disp.description); 
                         } 
                         for(let disp of listaDis){
                             let checkDisp = this.myframework.getElementById("disp_" + disp.id);
@@ -71,17 +56,100 @@ class Main implements EventListenerObject, HandlerPOST{//esto ultimo me obliga a
         
     }   
 
+    private componentSelection(disp : Device) : string{
+        let resutl : string = '';
+        let index : number = disp.name.indexOf(' ');
+        if(index < 0)
+            index = disp.name.length;
+        let s_aux : string = disp.name.substring(0, index);
+        switch(s_aux){
+            case "Lámpara":
+                resutl = `<li class="collection-item avatar">
+                <img src="./static/images/bulb.jpg" alt="" class="circle">
+                <span class="nombreDisp">${disp.name}</span>
+                <p>${disp.description}
+                </p>
+                <a href="#!" class="secondary-content">
+                    <div class="switch">
+                        <label>
+                        Off
+                        <input id="disp_${disp.id}" type="checkbox">
+                        <span class="lever"></span>
+                        On
+                        </label>
+                    </div>
+                </a>
+                </li>`;
+            break;
+            case "Velador":
+                resutl = `<li class="collection-item avatar">
+                <img src="./static/images/velador.png" alt="" class="circle">
+                <span class="nombreDisp">${disp.name}</span>
+                <p>${disp.description}
+                </p>
+                <a href="#!" class="secondary-content">
+                    <div class="switch">
+                        <label>
+                        Off
+                        <input id="disp_${disp.id}" type="checkbox">
+                        <span class="lever"></span>
+                        On
+                        </label>
+                    </div>
+                </a>
+                </li>`;
+            break;
+            case "Persiana":
+                resutl = `<li class="collection-item avatar">
+                <img src="./static/images/images.png" alt="" class="circle">
+                <span class="nombreDisp">${disp.name}</span>
+                <p>${disp.description}
+                </p>
+                <a href="#!" class="secondary-content">
+                    <form action="#">
+                        <p class="range-field">
+                            <input type="range" id=disp_${disp.id} min="0" max="100" />
+                        </p>
+                    </form>
+                </a>
+                </li>`;
+            break;
+            default:
+                resutl = `<li class="collection-item avatar">
+                <img src="./static/images/bulb.jpg" alt="" class="circle">
+                <span class="nombreDisp">${disp.name}</span>
+                <p>${disp.description}
+                </p>
+                <a href="#!" class="secondary-content">
+                    <div class="switch">
+                        <label>
+                        Off
+                        <input id="disp_${disp.id}" type="checkbox">
+                        <span class="lever"></span>
+                        On
+                        </label>
+                    </div>
+                </a>
+                </li>`;
+            break;
+        }
+
+
+        return resutl;
+    }   
+
+
+
     public responsePost(status:number, response:string):void{
          alert(response);
     }
 
     public main() : void{
-        console.log("Se ejecuto el metodo main!!!")
-        
+        console.log("Se ejecuto el metodo main!!!")   
         
     }
 
-    public mostrarLista(){
+    /* public mostrarLista(){
         let listaUser:Array<User> = new Array<User>();
         
         let usr1 = new User(1, "fede", "fede@fede", true);
@@ -93,7 +161,7 @@ class Main implements EventListenerObject, HandlerPOST{//esto ultimo me obliga a
         for(let obj in listaUser){
             listaUser[obj].printInfo();
         }
-    }
+    } */
 
     //public getElementById() : HTMLElement{
     //    return document.getElementById("boton");//hace referencia al documento html

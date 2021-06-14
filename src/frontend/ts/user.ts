@@ -1,4 +1,4 @@
-class User{//ojo agregarlo al html sino no funcionaria
+/* class User{//ojo agregarlo al html sino no funcionaria
     private id : number;
     private name : string;
     private email : string;
@@ -46,4 +46,4 @@ class User{//ojo agregarlo al html sino no funcionaria
     public printInfo():void{
         console.log(this.name + " " + this.isLogged);
     }
-}
+} */
