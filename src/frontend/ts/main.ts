@@ -6,35 +6,54 @@ class Main implements EventListenerObject, HandlerPOST{
     }
 
     public handleEvent(ev: Event) {
-        //alert("Se hizo click");
-        /* console.log(this);
-        alert("Se imprime el evento en pantalla");
-        console.log(ev); */
+        let objetoClick:HTMLInputElement = <HTMLInputElement> ev.target;//lo castea, esto obtiene que boton produjo el evento
+        let type:string = objetoClick.type.toLowerCase();
+        switch(type){
+            case "btn":
+                console.log("es un boton");
+                this.btnHandler(objetoClick);
+            break;
+            case "range":
+                console.log("es un range id=" + objetoClick.id + " Valor=" + objetoClick.value);
+            break;
+            case "checkbox":
+                console.log("es un checkbox id=" + objetoClick.id + " Estado=" + objetoClick.checked);
+            break;
+        }
+    }   
 
-        let objetoClick:HTMLElement = <HTMLInputElement> ev.target;//lo castea, esto obtiene que boton produjo el evento
-        switch(objetoClick.textContent)// == "Buscar")
+    /*
+        @brief Handler de botones
+        @param element  elemento que se detecto como evento
+        @return void
+    */ 
+    private btnHandler(element : HTMLInputElement) : void
+    {
+        switch(element.textContent)// == "Buscar")
         {
             //objetoClick.textContent = "btn pulsado";
             //console.log("se pulso");
             case "Editar":
                     //alert("Editar " + objetoClick.id);                    
-                    
+                console.log("Editar id=" + element.id);
                 break;
 
             case "Borrar":
-                    alert("Borrar " + objetoClick.id);
+                console.log("Borrar id=" + element.id);
+                break;
+            case "Nuevo":
+                console.log("Nuevo id=" + element.id);
+                //let checkBox:HTMLInputElement = <HTMLInputElement> ev.target;//lo castea, esto obtiene que boton produjo el evento
+                //alert(checkBox.id + " - " + checkBox.checked);
+                //let datos = {"id":checkBox.id, "status":checkBox.checked};
+                //this.myframework.requestPOST("http://localhost:8000/devices", this, datos)
                 break;
             default:
-                let checkBox:HTMLInputElement = <HTMLInputElement> ev.target;//lo castea, esto obtiene que boton produjo el evento
-                alert(checkBox.id + " - " + checkBox.checked);
-                let datos = {"id":checkBox.id, "status":checkBox.checked};
-                this.myframework.requestPOST("http://localhost:8000/devices", this, datos)
+                //let checkBox:HTMLInputElement =  <HTMLInputElement>objetoClick;
+                //alert(checkBox.id + " - " + checkBox.value);
                 break;
         }
-        
-    }   
-
-
+    }    
     /*
         @brief Carga los dispositivos almacenados en la base de datos
         @return void
@@ -53,8 +72,32 @@ class Main implements EventListenerObject, HandlerPOST{
                         listaDisp.innerHTML += this.componentSelection(disp);
                     } 
                     for(let disp of this.listaDis){
+                        //creo evento para los range btns y los check btns
+                        /* if(this.getDeviceType(disp) == "Persiana")
+                        {
+                            let s = "disp_" + disp.id;
+                            var rangebox = document.querySelector("input[id=" + s + "]");
+                            rangebox.addEventListener('change', function() {
+                                console.log("Valor: " + this.value);
+                                
+                            });
+                        }
+                        else
+                        {
+                            //let checkDisp = this.createElementListener("disp_" + disp.id, "click");
+                            let s = "disp_" + disp.id;
+                            var checkbox = document.querySelector("input[id=" + s + "]");
+                            checkbox.addEventListener('change', function() {
+                                if (this.checked) {
+                                  console.log("Checkbox is checked..");
+                                } else {
+                                  console.log("Checkbox is not checked..");
+                                }
+                                
+                            });   
+                        } */
+                        let chb: HTMLElement = this.createElementListener("disp_" + disp.id, "click");
                         //creo el listener para los botones edit y borrar
-                        let checkDisp = this.createElementListener("disp_" + disp.id, "click");   
                         let boton_edit: HTMLElement = this.createElementListener("btn_edit" + disp.id, "click");
                         let boton_delet: HTMLElement = this.createElementListener("btn_delete" + disp.id, "click");
                     }
@@ -88,18 +131,14 @@ class Main implements EventListenerObject, HandlerPOST{
     */ 
     private componentSelection(disp : Device) : string{
         let resutl : string = '';
-        let index : number = disp.name.indexOf(' ');
-        if(index < 0)
-            index = disp.name.length;
-        let s_aux : string = disp.name.substring(0, index);
-        switch(s_aux){
+        switch(this.getDeviceType(disp)){
             case "Lámpara":
                 resutl = `<li class="collection-item avatar">
                 <img src="./static/images/bulb.jpg" alt="" class="circle">
                 <span class="nombreDisp">${disp.name}</span>
                 <p>${disp.description}</p>
-                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" href="#modal1">Editar</a>
-                <a id=btn_delete${disp.id} class="waves-effect waves-light btn">Borrar</a>
+                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" type="btn" href="#modal1">Editar</a>
+                <a id=btn_delete${disp.id} class="waves-effect waves-light btn" type="btn">Borrar</a>
                     <a href="#!" class="secondary-content">
                         <div class="switch">
                             <label>
@@ -117,8 +156,8 @@ class Main implements EventListenerObject, HandlerPOST{
                 <img src="./static/images/velador.png" alt="" class="circle">
                 <span class="nombreDisp">${disp.name}</span>
                 <p>${disp.description}</p>
-                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" href="#modal1">Editar</a>
-                <a id=btn_delete${disp.id} class="waves-effect waves-light btn">Borrar</a>
+                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" type="btn" href="#modal1">Editar</a>
+                <a id=btn_delete${disp.id} class="waves-effect waves-light btn" type="btn">Borrar</a>
                 <a href="#!" class="secondary-content">
                     <div class="switch">
                         <label>
@@ -136,12 +175,13 @@ class Main implements EventListenerObject, HandlerPOST{
                 <img src="./static/images/images.png" alt="" class="circle">
                 <span class="nombreDisp">${disp.name}</span>
                 <p>${disp.description}</p>
-                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" href="#modal1">Editar</a>
-                <a id=btn_delete${disp.id} class="waves-effect waves-light btn">Borrar</a>
+                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" type="btn" href="#modal1">Editar</a>
+                <a id=btn_delete${disp.id} class="waves-effect waves-light btn" type="btn">Borrar</a>
                 <a href="#!" class="secondary-content">
                     <form action="#">
                         <p class="range-field">
-                            <input type="range" id=disp_${disp.id} min="0" max="100" />
+                            <input type="range" id=disp_${disp.id} min="0" max="100" name="foo"/>
+                            <output for="foo" onforminput="value = foo.valueAsNumber;"></output>
                         </p>
                     </form>
                 </a>
@@ -152,8 +192,8 @@ class Main implements EventListenerObject, HandlerPOST{
                 <img src="./static/images/bulb.jpg" alt="" class="circle">
                 <span class="nombreDisp">${disp.name}</span>
                 <p>${disp.description}</p>
-                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" href="#modal1">Editar</a>
-                <a id=btn_delete${disp.id} class="waves-effect waves-light btn">Borrar</a>
+                <a id=btn_edit${disp.id} class="waves-effect waves-light btn modal-trigger" type="btn" href="#modal1">Editar</a>
+                <a id=btn_delete${disp.id} class="waves-effect waves-light btn" type="btn">Borrar</a>
                 <a href="#!" class="secondary-content">
                     <div class="switch">
                         <label>
@@ -168,17 +208,25 @@ class Main implements EventListenerObject, HandlerPOST{
             break;
         }
         
-        
-        
-
-
         return resutl;
     }   
 
+    /*
+    @brief obtine el tipo de dispositivo
+    @param disp Dispositivo de tipo Device 
+    @return retorna string con tipo de elemento
+    */ 
+    private getDeviceType(disp : Device) : string{
+        let index : number = disp.name.indexOf(' ');
+        if(index < 0)
+            index = disp.name.length;
+        let s_aux : string = disp.name.substring(0, index);
+        return s_aux;
+    }
 
 
     public responsePost(status:number, response:string):void{
-         alert(response);
+        //alert(response);
     }
 
     public main() : void{
