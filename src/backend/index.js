@@ -11,9 +11,11 @@ app.use(express.json());
 // to serve static files
 app.use(express.static('/home/node/app/static/'));
 
+
+/*Codigo de practica en clase*/
+/*
 //Ejercicio 3
 var datos = require("./datos.json");
-
 
 //Ejercicio 4
 app.get('/devices/', function(req, res, next) {
@@ -46,10 +48,13 @@ app.post('/devices/', function(req, res) {
     res.json(datosFiltrados);
     //res.send("Recibido ok");
 });
+*/
 
+
+/**
+ * @brief Metodo post para instertar y/o actualizar un dispositivo 
+ */
 app.post('/device_insert_update/', function(req, res){
-    //si el id es "" es un insert sino es un update
-    //console.log("/device_insert_update/");
     if(req.body.id == ""){
         console.log("Insert new element");
         db_mysql.query('insert into Devices (name,description,state,type) values(?,?,?,?)', [req.body.name, req.body.description, req.body.state, req.body.type], function(err, respuesta){
@@ -73,6 +78,9 @@ app.post('/device_insert_update/', function(req, res){
     }
 });
 
+/**
+ * @brief Metodo post para actualizar un dispositivo 
+ */
 app.post('/device_update/', function(req, res){
     let id_arr = req.body.id.split("_");
     let id = id_arr[1]; 
@@ -86,6 +94,9 @@ app.post('/device_update/', function(req, res){
     });
 });
 
+/**
+ * @brief Metodo post para eliminar un dispositivo 
+ */
 app.post('/device_delete/', function(req, res){
     db_mysql.query('delete from Devices where id=?', [req.body.id], function(err, respuesta){
         if(err)
@@ -97,6 +108,9 @@ app.post('/device_delete/', function(req, res){
     });
 });
 
+/**
+ * @brief Metodo post para mostrar un dispositivo 
+ */
 app.post('/devices_show/', function(req, res){
     db_mysql.query("Select * from Devices", function(err, respuesta){
         if(err)
@@ -110,7 +124,9 @@ app.post('/devices_show/', function(req, res){
 });
 
 
-
+/**
+ * @brief Metodo listen que se ejecuta al iniciar el servicio backend 
+ */
 app.listen(PORT, function(req, res) {
     console.log("NodeJS API running correctly");
 });
