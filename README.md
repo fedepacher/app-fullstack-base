@@ -107,7 +107,7 @@ En el lado del backend se programaron las llamadas a la base de datos para que s
 Dentro del código del programa del backend se optó por la misma metodología de documentación que en el frontend.
  
  
-# Base de datos
+### Base de datos
  
 Se utiliza una base de datos MySQL que consta de una tabla llamada `Devices` con la siguiente estructura:
 - `id` int(11) NOT NULL
@@ -120,7 +120,7 @@ El campo `id` se utiliza como clave primaria.
  
 El campo `state` almacena el estado del dispositivo, si es encendido y apagado utilizará los valores 1 y 0, respectivamente. En cambio para el tipo dimmer el valor del estado puede variar desde 0 a 100.
  
-El campo `type` en 0 indica sin estado, 1 indica interruptor y en 2 indica dimmer.
+El campo `type` en 0 indica interruptor y en 2 indica dimmer.
  
 Para acceder al administrador de base de datos phpmyadmin, ingrese desde un navegador de internet a la url http://localhost:8001 con usuario 'root' y contraseña 'userpass'.
  

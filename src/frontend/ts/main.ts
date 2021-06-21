@@ -111,11 +111,7 @@ class Main implements EventListenerObject, HandlerPOST{
                     case "Editar":
                         id_send = id_mod;
                         break;
-                }
-                
-                if(type == "0"){
-                    type = "1";//on/off
-                }
+                } 
                 let data = {"id": `${id_send}`, "name": `${name}`, "description": `${description}`, "state": 0, "type": Number(type)};
                 this.myframework.requestPOST("http://localhost:8000/device_insert_update/", this, data);
                 break;
@@ -149,10 +145,10 @@ class Main implements EventListenerObject, HandlerPOST{
                     /*creacion de listeners a cada elemento*/
                     for(let disp of listaDis){    
                         switch(disp.type){
-                            case 1:
+                            case 0:
                                 let clk: HTMLElement = this.createElementListener("disp_" + disp.id, "click");
                                 break;
-                            case 2:
+                            case 1:
                                 let rng: HTMLElement = this.createElementListener("disp_" + disp.id, "change");
                                 break;
                         }                        
@@ -192,7 +188,7 @@ class Main implements EventListenerObject, HandlerPOST{
         let resutl : string = '';
         let estado="";
         switch(disp.type){
-            case 1:
+            case 0:
                 /*Elemento de estado On - Off*/
                 if (disp.state){
                     estado="checked";
@@ -216,7 +212,7 @@ class Main implements EventListenerObject, HandlerPOST{
                 <input id="tipodispositivo_${disp.id}" type="text" value="${disp.type}" hidden>
                 </li>`;
             break;            
-            case 2:
+            case 1:
                 /*Elemento de estado dimerizable*/
                 resutl = `<li class="collection-item avatar">
                 <img src="./static/images/images.png" alt="" class="circle">
