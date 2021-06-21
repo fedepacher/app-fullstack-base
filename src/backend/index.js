@@ -4,7 +4,7 @@ var PORT    = 3000;
 
 var express = require('express');//hace un import de expres
 var app     = express();
-var utils   = require('./mysql-connector');//hace un import
+var db_mysql   = require('./mysql-connector');//hace un import
 
 // to parse application/json
 app.use(express.json()); 
@@ -42,11 +42,74 @@ app.post('/devices/', function(req, res) {
     let datosFiltrados = datos.filter(item => item.id == req.body.id);
     if (datosFiltrados.length > 0) {
         datosFiltrados[0].state = req.body.state;
-        //res.send("Todo ok");
     }
     res.json(datosFiltrados);
-    //res.send("Todo ok");
+    //res.send("Recibido ok");
 });
+
+app.post('/device_insert_update/', function(req, res){
+    //si el id es "" es un insert sino es un update
+    //console.log("/device_insert_update/");
+    if(req.body.id == ""){
+        console.log("Insert new element");
+        db_mysql.query('insert into Devices (name,description,state,type) values(?,?,?,?)', [req.body.name, req.body.description, req.body.state, req.body.type], function(err, respuesta){
+            if(err){
+                console.log("Insert error")
+                res.send(err).status(400);
+            }
+            res.send("New item inserted succesfully");
+        });
+    }
+    else
+    {
+        console.log("Update element");
+        db_mysql.query('update Devices set name=?, description=?, type=? where id=?', [req.body.name, req.body.description, req.body.type, req.body.id], function(err, respuesta){
+            if(err){
+                console.log("Update error")
+                res.send(err).status(400);
+            }
+            res.send("Item updated succesfully");
+        });
+    }
+});
+
+app.post('/device_update/', function(req, res){
+    let id_arr = req.body.id.split("_");
+    let id = id_arr[1]; 
+    //res.send(id);
+    db_mysql.query('update Devices set state=? where id=?', [req.body.status, id], function(err, respuesta){
+        if(err){
+            console.log("Update error")
+            res.send(err).status(400);
+        }
+        res.send("Item updated succesfully");
+    });
+});
+
+app.post('/device_delete/', function(req, res){
+    db_mysql.query('delete from Devices where id=?', [req.body.id], function(err, respuesta){
+        if(err)
+        {
+            console.log("Delete error")
+            res.send(err).status(400);
+        }
+        res.send(respuesta);
+    });
+});
+
+app.post('/devices_show/', function(req, res){
+    db_mysql.query("Select * from Devices", function(err, respuesta){
+        if(err)
+        {
+            console.log("Show error")
+            res.send(err).status(400);
+        }
+        res.send(respuesta);
+    });
+    
+});
+
+
 
 app.listen(PORT, function(req, res) {
     console.log("NodeJS API running correctly");

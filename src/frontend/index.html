@@ -42,39 +42,38 @@
                     <div id="modal1" class="modal modal-fixed-footer">
                         <form id="formadd" method="GET" action="#">
                             <div class="modal-content">
-                                <h4><span id="tit_modal"></span></h4>
+                                <h4><span id="modal_title"></span></h4>
                                 <div class="row">
                                     <form class="col s12">
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <input placeholder="Nombre" id="nombre_dis" type="text" class="validate">
+                                                <input placeholder="Nombre" id="name_device" type="text" class="validate">
                                                 <label for="nombre">Nombre</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <input placeholder="Descripción"  id="descrip_dis" type="text" class="validate">
+                                                <input placeholder="Descripción"  id="description_device" type="text" class="validate">
                                                 <label for="descrip_dis">Descripción</label>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="input-field col s12">
-                                                <select id="tipo_dis">
+                                                <select id="type_device">
                                                     <option value="0" disabled selected>Seleccionar</option>
                                                     <option value="1">On/Off</option>
-                                                    <option value="2">Dimerizable</option>
-                                                    <option value="3">Persiana</option>
+                                                    <option value="2">Dimerizable</option>                                                    
                                                 </select>
                                                 <label>Tipo</label>
                                             </div>
-                                            <span><input id="id_dis" type="text" hidden></span>
+                                            <span><input id="id_device" type="text" hidden></span>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <div class="modal-footer">
                                 <a href="#!" class="modal-close waves-effect waves-green btn-small red">Cancelar</a>
-                                <a href="#!" id="modalacep" class="modal-close waves-effect waves-green btn-small blue">Aceptar</a>
+                                <a href="#!" id="btnAccept" class="modal-close waves-effect waves-green btn-small blue" type="btn">Aceptar</a>
                             </div>
                         </form>
                     </div>

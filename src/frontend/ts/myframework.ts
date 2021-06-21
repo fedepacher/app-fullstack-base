@@ -17,15 +17,17 @@ class MyFramework{
     } 
 
     public requestPOST(url:string, response:HandlerPOST, datos:any){
-        let xml:XMLHttpRequest = new XMLHttpRequest();
+        let xlm: XMLHttpRequest = new XMLHttpRequest();
 
-        xml.onreadystatechange = ()=>{
-            if(xml.readyState == 4){
-                response.responsePost(xml.status, xml.responseText);
-            }
+        xlm.onreadystatechange = () => {
+        if (xlm.readyState == 4) {
+            response.responsePost(xlm.status, xlm.responseText);
         }
-        xml.open("POST", url, true);
-        xml.setRequestHeader("Content-Type", "application/json");
-        xml.send(JSON.stringify(datos));
+        }
+        xlm.open("POST", url, true);
+        xlm.setRequestHeader("Content-Type", "application/json");
+
+        
+        xlm.send(JSON.stringify(datos));
     }
 }
