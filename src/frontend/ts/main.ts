@@ -75,6 +75,7 @@ class Main implements EventListenerObject, HandlerPOST{
                 (<HTMLInputElement>this.myframework.getElementById('name_device')).value = name;
                 (<HTMLInputElement>this.myframework.getElementById('description_device')).value = description;
                 (<HTMLInputElement>this.myframework.getElementById('type_device')).value = type;
+                console.log(type);
                 break;
             case "Eliminar":
                 /*Evento del boton eliminar*/  
@@ -194,7 +195,7 @@ class Main implements EventListenerObject, HandlerPOST{
                     estado="checked";
                 }
                 resutl = `<li class="collection-item avatar">
-                <img src="./static/images/bulb.jpg" alt="" class="circle">
+                <img src="./static/images/lightbulb.png" alt="" class="circle">
                 <span id="nombre_${disp.id}" class="nombreDisp">${disp.name}</span>
                 <p  id="descripcion_${disp.id}">${disp.description}</p>
                 <a id=btnEdit_${disp.id} class="waves-effect waves-light btn modal-trigger" type="btn" href="#modal1">Editar</a>
@@ -215,7 +216,7 @@ class Main implements EventListenerObject, HandlerPOST{
             case 1:
                 /*Elemento de estado dimerizable*/
                 resutl = `<li class="collection-item avatar">
-                <img src="./static/images/images.png" alt="" class="circle">
+                <img src="./static/images/window.png" alt="" class="circle">
                 <span id="nombre_${disp.id}" class="nombreDisp">${disp.name}</span>
                 <p id="descripcion_${disp.id}">${disp.description}</p>
                 <a id=btnEdit_${disp.id} class="waves-effect waves-light btn modal-trigger" type="btn" href="#modal1">Editar</a>
@@ -239,7 +240,7 @@ class Main implements EventListenerObject, HandlerPOST{
                 estado="checked";
                 }
                 resutl = `<li class="collection-item avatar">
-                <img src="./static/images/bulb.jpg" alt="" class="circle">
+                <img src="./static/images/lightbulb.png" alt="" class="circle">
                 <span id="nombre_${disp.id}" class="nombreDisp">${disp.name}</span>
                 <p  id="descripcion_${disp.id}">${disp.description}</p>
                 <a id=btnEdit_${disp.id} class="waves-effect waves-light btn modal-trigger" type="btn" href="#modal1">Editar</a>

@@ -1,3 +1,5 @@
+![header](doc/header.png)
+
 Introducción
 ============
  
